@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ap1212 NSEA Air 1 Celebration</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+  body, html { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  .page { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px; transition: opacity 0.6s ease; }
+  .page.active { display: flex; }
+
+  /* PAGE 1: MAGIC CASTLE, RAINBOW & UNICORNS */
+  #page1 {
+    background: linear-gradient(135deg, #ff007f, #ff8c00, #ffd700, #00e676, #00b0ff, #7c4dff, #ff1744);
+    background-size: 400% 400%;
+    animation: rainbowBg 8s ease infinite;
+  }
+  @keyframes rainbowBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .rainbow-arc {
+    position: absolute; top: -15%; width: 130vw; height: 65vw; border-radius: 50%;
+    border: 14px solid transparent;
+    box-shadow: 0 0 0 10px #ff1744, 0 0 0 20px #ff9100, 0 0 0 30px #ffea00, 0 0 0 40px #00e676, 0 0 0 50px #00b0ff, 0 0 0 60px #651fff;
+    opacity: 0.55; pointer-events: none; animation: pulseArc 3s ease-in-out infinite alternate;
+  }
+  @keyframes pulseArc { from { transform: scale(0.97); } to { transform: scale(1.03); } }
+
+  .unicorn { position: absolute; font-size: 2.6rem; animation: flyUnicorn 6s linear infinite; pointer-events: none; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+  .u1 { top: 10%; left: -15%; animation-duration: 7s; }
+  .u2 { top: 24%; left: -20%; animation-duration: 5.5s; animation-delay: 2s; font-size: 2.2rem; }
+  @keyframes flyUnicorn {
+    0% { transform: translateX(0) translateY(0) rotate(-5deg); }
+    50% { transform: translateX(65vw) translateY(-25px) rotate(5deg); }
+    100% { transform: translateX(130vw) translateY(10px) rotate(-5deg); }
+  }
+
+  .castle {
+    font-size: 4.5rem; margin-bottom: 8px; position: relative; z-index: 2;
+    animation: floatCastle 2.5s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 18px #fff59d);
+  }
+  @keyframes floatCastle { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+
+  .welcome-title {
+    position: relative; z-index: 2; color: #fff; font-size: clamp(1.5rem, 6vw, 2.5rem); font-weight: 900;
+    text-shadow: 0 3px 0 #4a148c, 0 6px 15px rgba(0,0,0,0.45);
+    background: rgba(25, 10, 50, 0.45); backdrop-filter: blur(6px);
+    padding: 16px 22px; border-radius: 22px; border: 3px solid #ffd700;
+    margin-bottom: 22px; line-height: 1.25;
+  }
+  .lets-go-btn {
+    position: relative; z-index: 5;
+    background: linear-gradient(180deg, #ffeb3b, #ff9800);
+    color: #21094e; font-size: 1.5rem; font-weight: 900;
+    padding: 16px 42px; border: 4px solid #fff; border-radius: 50px;
+    box-shadow: 0 8px 0 #e65100, 0 12px 25px rgba(0,0,0,0.4);
+    cursor: pointer; animation: bounceBtn 1.2s infinite;
+  }
+  .lets-go-btn:active { transform: translateY(5px); box-shadow: 0 3px 0 #e65100; }
+  @keyframes bounceBtn { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+  /* PAGE 2: THE 12-KNOCK DOOR */
+  #page2 {
+    background: radial-gradient(circle at center, #2c1654, #120624);
+    color: #fff;
+  }
+  .tribute-text {
+    font-size: clamp(1.15rem, 4.5vw, 1.6rem); font-weight: 800; color: #ffd54f;
+    text-shadow: 0 2px 10px rgba(255, 213, 79, 0.5);
+    margin-bottom: 14px; max-width: 90%;
+  }
+  .knock-counter {
+    font-size: 1.1rem; font-weight: 700; background: rgba(255,255,255,0.12);
+    padding: 6px 18px; border-radius: 20px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.25);
+  }
+  .door-frame {
+    width: 185px; height: 280px; background: #3e2723; padding: 12px 12px 0 12px;
+    border-radius: 16px 16px 0 0; box-shadow: 0 0 35px rgba(255, 193, 7, 0.35);
+    position: relative; cursor: pointer;
+  }
+  .door {
+    width: 100%; height: 100%;
+    background: linear-gradient(145deg, #8d6e63, #5d4037);
+    border: 4px solid #4e342e; border-radius: 10px 10px 0 0;
+    position: relative; transform-origin: left center;
+    transition: transform 0.7s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-around; padding: 16px;
+  }
+  .door-panel { width: 80%; height: 35%; border: 3px solid #4e342e; border-radius: 6px; background: rgba(0,0,0,0.1); }
+  .doorknob {
+    position: absolute; right: 14px; top: 52%; width: 20px; height: 20px;
+    background: radial-gradient(circle at 30% 30%, #fff59d, #fbc02d);
+    border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+  .door.shake { animation: doorShake 0.25s ease; }
+  @keyframes doorShake {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-2deg) scale(1.03); }
+    75% { transform: rotate(2deg) scale(0.98); }
+  }
+  .door.open { transform: perspective(600px) rotateY(-80deg); }
+  .knock-pop {
+    position: absolute; font-weight: 900; color: #ffeb3b; font-size: 1.3rem;
+    pointer-events: none; animation: popUp 0.6s ease-out forwards; text-shadow: 0 2px 4px #000;
+  }
+  @keyframes popUp { 0% { opacity: 1; transform: translateY(0) scale(0.8); } 100% { opacity: 0; transform: translateY(-45px) scale(1.3); } }
+
+  /* PAGE 3: GRAND FINALE */
+  #page3 {
+    background: radial-gradient(circle at top, #1a237e, #4a148c, #880e4f);
+    color: #fff; justify-content: space-between; padding: 14px 10px 80px 10px;
+  }
+  .congrats-banner {
+    font-size: clamp(1.2rem, 4.8vw, 2rem); font-weight: 900; color: #ffeb3b;
+    background: rgba(0,0,0,0.45); border: 3px solid #ffd700;
+    padding: 12px 16px; border-radius: 18px;
+    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4); z-index: 5;
+  }
+  .trophy-center {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(circle, rgba(255,215,0,0.35), transparent 70%);
+    padding: 14px; border-radius: 50%; z-index: 4;
+    animation: pulseTrophy 1.8s ease-in-out infinite alternate;
+  }
+  @keyframes pulseTrophy { from { transform: scale(0.95); } to { transform: scale(1.05); } }
+  .trophy-icon { font-size: 4.5rem; filter: drop-shadow(0 0 16px #ffd700); }
+  .trophy-badge {
+    background: linear-gradient(90deg, #ffd700, #ff9800); color: #1a0033;
+    font-weight: 900; font-size: 1rem; padding: 5px 16px; border-radius: 20px;
+    border: 2px solid #fff; margin-top: 4px;
+  }
+
+  /* DANCING CHARACTERS */
+  .dancers-row {
+    display: flex; justify-content: space-around; align-items: flex-end;
+    width: 100%; max-width: 520px; z-index: 5; gap: 8px;
+  }
+  .dancer-card {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(255,255,255,0.14); backdrop-filter: blur(4px);
+    padding: 8px 10px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.3);
+    animation: danceMove 0.6s infinite alternate ease-in-out;
+  }
+  .dancer-card:nth-child(2) { animation-delay: 0.2s; }
+  .dancer-card:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes danceMove {
+    0% { transform: translateY(0) rotate(-6deg); }
+    100% { transform: translateY(-12px) rotate(6deg); }
+  }
+  .dancer-label { font-size: 0.78rem; font-weight: 800; margin-top: 4px; color: #fff; }
+
+  /* TOY TRAIN & CHOCOLATES */
+  .train-track {
+    position: fixed; bottom: 8px; left: 0; width: 100%; height: 58px;
+    border-bottom: 4px dashed #ffd54f; pointer-events: none; z-index: 10;
+  }
+  .toy-train {
+    position: absolute; bottom: 4px; left: -180px; font-size: 2.4rem;
+    white-space: nowrap; animation: chugTrain 7s linear infinite;
+  }
+  @keyframes chugTrain {
+    0% { left: -180px; }
+    100% { left: 105vw; }
+  }
+  .chocolate, .confetti {
+    position: fixed; pointer-events: none; z-index: 9;
+    animation: fallItem linear forwards;
+  }
+  @keyframes fallItem {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(105vh) rotate(540deg); opacity: 0.85; }
+  }
+  .popper-btn {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    font-size: 2.2rem; background: rgba(255,255,255,0.2); border: 2px solid #ffd700;
+    border-radius: 50%; width: 52px; height: 52px; cursor: pointer; z-index: 12;
+  }
+  .popper-left { left: 8px; }
+  .popper-right { right: 8px; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: WELCOME -->
+<div id="page1" class="page active">
+  <div class="rainbow-arc"></div>
+  <div class="unicorn u1">🦄✨</div>
+  <div class="unicorn u2">🦄🌈</div>
+  <div class="castle">🏰⚡🪄</div>
+  <h1 class="welcome-title">Welcome to Ap1212 party for NSEA Air 1</h1>
+  <button class="lets-go-btn" onclick="goToDoor()">Let's Go! 🚀</button>
+</div>
+
+<!-- PAGE 2: 12 KNOCKS DOOR -->
+<div id="page2" class="page">
+  <div class="tribute-text">This is for respect of tullu and Rasputin</div>
+  <div class="knock-counter" id="knockStatus">Tap the door to knock: 0 / 12</div>
+  <div class="door-frame" id="doorFrame" onclick="knockDoor(event)">
+    <div class="door" id="door">
+      <div class="door-panel"></div>
+      <div class="doorknob"></div>
+      <div class="door-panel"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3: GRAND CELEBRATION -->
+<div id="page3" class="page">
+  <div class="congrats-banner">🎉 Ap 1212 Congratulations for becoming NSEA Air 1 🎉</div>
+
+  <button class="popper-btn popper-left" onclick="burstPoppers()">🎉</button>
+  <button class="popper-btn popper-right" onclick="burstPoppers()">🎊</button>
+
+  <div class="trophy-center">
+    <div class="trophy-icon">🏆</div>
+    <div class="trophy-badge">AP 1212 • NSEA AIR 1</div>
+  </div>
+
+  <div class="dancers-row">
+    <!-- Shinchan SVG -->
+    <div class="dancer-card">
+      <svg width="64" height="72" viewBox="0 0 100 110">
+        <circle cx="50" cy="36" r="24" fill="#ffcc99" stroke="#000" stroke-width="3"/>
+        <path d="M26 32 Q30 10 50 12 Q70 10 74 32 Z" fill="#111"/>
+        <path d="M32 24 Q40 18 46 24" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M54 24 Q60 18 68 24" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="34" r="5" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="40" cy="34" r="2" fill="#000"/>
+        <circle cx="60" cy="34" r="5" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="60" cy="34" r="2" fill="#000"/>
+        <circle cx="50" cy="48" r="5" fill="#e53935"/>
+        <rect x="34" y="60" width="32" height="26" rx="6" fill="#e53935" stroke="#000" stroke-width="3"/>
+        <rect x="36" y="86" width="28" height="14" fill="#fdd835" stroke="#000" stroke-width="3"/>
+      </svg>
+      <span class="dancer-label">Shinchan</span>
+    </div>
+
+    <!-- Doraemon SVG -->
+    <div class="dancer-card">
+      <svg width="64" height="72" viewBox="0 0 100 110">
+        <circle cx="50" cy="40" r="28" fill="#039be5" stroke="#000" stroke-width="3"/>
+        <circle cx="50" cy="44" r="22" fill="#fff" stroke="#000" stroke-width="2"/>
+        <ellipse cx="43" cy="28" rx="6" ry="8" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="45" cy="29" r="2" fill="#000"/>
+        <ellipse cx="57" cy="28" rx="6" ry="8" fill="#fff" stroke="#000" stroke-width="2"/><circle cx="55" cy="29" r="2" fill="#000"/>
+        <circle cx="50" cy="37" r="5" fill="#e53935" stroke="#000" stroke-width="2"/>
+        <path d="M35 48 Q50 62 65 48" stroke="#000" stroke-width="2.5" fill="none"/>
+        <rect x="32" y="66" width="36" height="6" rx="3" fill="#e53935" stroke="#000" stroke-width="2"/>
+        <circle cx="50" cy="71" r="5" fill="#fdd835" stroke="#000" stroke-width="2"/>
+        <rect x="34" y="72" width="32" height="28" rx="10" fill="#039be5" stroke="#000" stroke-width="3"/>
+        <path d="M40 76 A10 10 0 0 0 60 76 Z" fill="#fff" stroke="#000" stroke-width="2"/>
+      </svg>
+      <span class="dancer-label">Doraemon</span>
+    </div>
+
+    <!-- Chhota Bheem SVG -->
+    <div class="dancer-card">
+      <svg width="64" height="72" viewBox="0 0 100 110">
+        <circle cx="50" cy="36" r="23" fill="#d7955b" stroke="#000" stroke-width="3"/>
+        <path d="M27 32 Q32 10 50 12 Q68 10 73 32 Q62 22 50 24 Q38 22 27 32 Z" fill="#111"/>
+        <circle cx="50" cy="25" r="2.5" fill="#e53935"/>
+        <circle cx="41" cy="35" r="3" fill="#000"/><circle cx="59" cy="35" r="3" fill="#000"/>
+        <path d="M42 46 Q50 53 58 46" stroke="#000" stroke-width="2.5" fill="none"/>
+        <rect x="33" y="59" width="34" height="24" rx="8" fill="#d7955b" stroke="#000" stroke-width="3"/>
+        <rect x="34" y="80" width="32" height="20" rx="4" fill="#ff6f00" stroke="#000" stroke-width="3"/>
+      </svg>
+      <span class="dancer-label">Chhota Bheem</span>
+    </div>
+  </div>
+
+  <div class="train-track">
+    <div class="toy-train" id="toyTrain">🚂🚃🍫🚃🍬🚃🍫</div>
+  </div>
+</div>
+
+<script>
+  let knocks = 0;
+  let audioCtx = null;
+
+  function playKnockSound(pitch = 160) {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(45, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.13);
+    } catch (e) {}
+  }
+
+  function goToDoor() {
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+  }
+
+  function knockDoor(e) {
+    if (knocks >= 12) return;
+    knocks++;
+    playKnockSound(150 + knocks * 10);
+
+    const door = document.getElementById('door');
+    door.classList.remove('shake');
+    void door.offsetWidth;
+    door.classList.add('shake');
+
+    const pop = document.createElement('div');
+    pop.className = 'knock-pop';
+    pop.innerText = knocks === 12 ? 'OPENING! 🎉' : `KNOCK #${knocks}!`;
+    pop.style.left = (e.clientX ? e.clientX - 40 : 120) + 'px';
+    pop.style.top = (e.clientY ? e.clientY - 30 : 220) + 'px';
+    document.body.appendChild(pop);
+    setTimeout(() => pop.remove(), 650);
+
+    document.getElementById('knockStatus').innerText = `Tap the door to knock: ${knocks} / 12`;
+
+    if (knocks === 12) {
+      setTimeout(() => {
+        door.classList.add('open');
+        setTimeout(() => {
+          document.getElementById('page2').classList.remove('active');
+          document.getElementById('page3').classList.add('active');
+          startParty();
+        }, 750);
+      }, 300);
+    }
+  }
+
+  function startParty() {
+    burstPoppers();
+    setInterval(burstPoppers, 2600);
+    setInterval(dropTrainChocolate, 450);
+  }
+
+  function burstPoppers() {
+    const icons = ['🎉', '🎊', '✨', '⭐', '🎈', '🥳'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.innerText = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 95 + 'vw';
+      el.style.top = '-20px';
+      el.style.fontSize = (16 + Math.random() * 16) + 'px';
+      el.style.animationDuration = (2 + Math.random() * 2) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+  }
+
+  function dropTrainChocolate() {
+    const train = document.getElementById('toyTrain');
+    if (!train) return;
+    const rect = train.getBoundingClientRect();
+    if (rect.left > 0 && rect.left < window.innerWidth) {
+      const sweets = ['🍫', '🍬', '🍭', '🍪'];
+      const choco = document.createElement('div');
+      choco.className = 'chocolate';
+      choco.innerText = sweets[Math.floor(Math.random() * sweets.length)];
+      choco.style.left = (rect.left + 40) + 'px';
+      choco.style.top = (rect.top - 10) + 'px';
+      choco.style.fontSize = '1.5rem';
+      choco.style.animationDuration = '1.6s';
+      document.body.appendChild(choco);
+      setTimeout(() => choco.remove(), 1700);
+    }
+  }
+</script>
+</body>
+          </html>
+          
